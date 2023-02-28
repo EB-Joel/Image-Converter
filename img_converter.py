@@ -1,6 +1,11 @@
 from PIL import Image
 import os
 
+# TODO create GUI,
+#   add function to search OS
+#   Update convert_images function to get image path from GUI
+#   add button to activate updated function
+
 # gets os path
 path = os.getcwd()
 
