@@ -8,6 +8,7 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
+from kivymd.uix.menu import MDDropdownMenu
 
 
 KV = '''
@@ -18,10 +19,20 @@ MDBoxLayout:
         title: "Image Converter"
         elevation: 3
 
+    MDLabel:
+        text:"Image converter for file formats: jpg, png and webp.  Select the image you would like to convert using the button below.  Converted image will be saved in the same folder as the original image."
+        halign:"center"
+
     MDFloatLayout:
 
         MDRoundFlatIconButton:
-            text: "Open manager"
+            text: "Select Image"
+            icon: "folder"
+            pos_hint: {"center_x": .25, "center_y": .5}
+            on_release: app.file_manager_open()
+            
+        MDRoundFlatIconButton:
+            text: "Select save location"
             icon: "folder"
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: app.file_manager_open()
@@ -31,16 +42,20 @@ MDBoxLayout:
 class Example(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Orange"
+        self.screen = Builder.load_string(KV)
         Window.bind(on_keyboard=self.events)
         self.manager_open = False
         self.file_manager = MDFileManager(
             exit_manager=self.exit_manager, select_path=self.select_path, preview=True
         )
+       
+    def menu_callback(self, text_item):
+        print(text_item)
 
     def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Orange"
-        return Builder.load_string(KV)
+        return self.screen
 
     def file_manager_open(self):
         self.file_manager.show(os.path.expanduser("~"))  # output manager to the screen
