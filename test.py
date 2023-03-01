@@ -22,6 +22,7 @@ MDBoxLayout:
     MDLabel:
         text:"Image converter for file formats: jpg, png and webp.  Select the image you would like to convert using the button below.  Converted image will be saved in the same folder as the original image."
         halign:"center"
+        padding:[20,20]
 
     MDFloatLayout:
 
